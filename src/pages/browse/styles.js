@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import PlayIcon from '../../assets/images/play.svg';
 
 export const Container = styled.div`
@@ -16,7 +17,7 @@ export const List = styled.div`
   flex-wrap: wrap;
 `;
 
-export const PlayList = styled.a`
+export const PlayList = styled(Link)`
   display: flex;
   flex-direction: column;
   text-decoration: none;
