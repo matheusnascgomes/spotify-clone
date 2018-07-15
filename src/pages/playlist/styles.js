@@ -1,7 +1,21 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+import { Spinner } from '../../components/Loading/styles';
 
 export const Container = styled.div`
   margin-top: 30px;
+
+  ${Spinner} {
+    height: 45px;
+  }
+
+  ${props => props.loading
+    && css`
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `};
 `;
 
 export const Info = styled.div`
@@ -66,9 +80,9 @@ export const SongList = styled.table`
   }
 
   tbody td {
-    font-size: 12px;
+    font-size: 11px;
     border-top: 1px solid #333333;
-    padding: 10px 10px;
+    padding: 10px 0 10px 0;
   }
 
   tbody tr:hover td {

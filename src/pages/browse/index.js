@@ -1,33 +1,57 @@
-import React from 'react';
+import React, { Component } from 'react';
+// import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
+import Loading from '../../components/Loading';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Container, List, PlayList } from './styles';
+import { Creators as PlaylistActions } from '../../store/ducks/playlists';
 
-const Browse = () => (
-  <Container>
-    <h1>Navegar</h1>
-    <List>
-      <PlayList to="playlist/1">
-        <img src="http://assets.blabbermouth.net/media/systemofadown2014band_638.jpg" alt="SOAD" />
-        <strong>Bagunça Gringa</strong>
-        <p>Só as melhores do rock americano</p>
-      </PlayList>
-      <PlayList to="playlist/1">
-        <img src="http://assets.blabbermouth.net/media/systemofadown2014band_638.jpg" alt="SOAD" />
-        <strong>Bagunça Gringa</strong>
-        <p>Só as melhores do rock americano</p>
-      </PlayList>
-      <PlayList to="playlist/1">
-        <img src="http://assets.blabbermouth.net/media/systemofadown2014band_638.jpg" alt="SOAD" />
-        <strong>Bagunça Gringa</strong>
-        <p>Só as melhores do rock americano</p>
-      </PlayList>
-      <PlayList to="playlist/1">
-        <img src="http://assets.blabbermouth.net/media/systemofadown2014band_638.jpg" alt="SOAD" />
-        <strong>Bagunça Gringa</strong>
-        <p>Só as melhores do rock americano</p>
-      </PlayList>
-    </List>
-  </Container>
-);
+class Browse extends Component {
+  static PropTypes = {
+    getPlaylistsRequest: PropTypes.func.isRequired,
+    playlists: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          title: PropTypes.string,
+        }),
+      ),
+      loading: PropTypes.bool,
+    }).isRequired,
+  };
 
-export default Browse;
+  componentDidMount() {
+    this.props.getPlaylistsRequest();
+  }
+
+  render() {
+    return (
+      <Container>
+        <h1>Navegar {this.props.playlists.loading && <Loading />}</h1>
+        <List>
+          {this.props.playlists.data.map(item => (
+            <PlayList key={item.id} to={`playlist/${item.id}`}>
+              <img src={item.thumbnail} alt={item.title} />
+              <strong>{item.title}</strong>
+              <p>S{item.description}</p>
+            </PlayList>
+          ))}
+        </List>
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  playlists: state.playlists,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Browse);

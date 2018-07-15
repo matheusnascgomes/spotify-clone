@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { Spinner } from '../Loading/styles';
+
 export const Container = styled.aside`
   height: 100%;
   width: 200px;
@@ -43,6 +45,15 @@ export const Nav = styled.ul`
       letter-spacing: 1.11px;
       font-weight: 300;
     }
+  }
+
+  .sidebar_item_content {
+    display: flex;
+    align-items: center;
+  }
+
+  ${Spinner} {
+    margin-left: 5px;
   }
 `;
 

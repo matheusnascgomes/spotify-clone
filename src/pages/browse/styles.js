@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PlayIcon from '../../assets/images/play.svg';
+import { Spinner } from '../../components/Loading/styles';
 
 export const Container = styled.div`
   display: flex;
@@ -9,6 +10,13 @@ export const Container = styled.div`
 
   h1 {
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+
+    ${Spinner} {
+      height: 30px;
+      margin-left: 5px;
+    }
   }
 `;
 
