@@ -89,3 +89,8 @@ export const SongList = styled.table`
     background: #282828;
   }
 `;
+
+export const SongItem = styled.tr`
+  background: ${props => (props.selected ? '#282828' : 'transparent')};
+  color: ${props => (props.selected ? '#1ED760' : '#FFF')};
+`;
