@@ -18,7 +18,7 @@ export default function player(state = INITIAL_STATE, action) {
     case Types.PLAY:
       return { ...state, status: Sound.status.PLAYING };
     case Types.PAUSE:
-      return { ...state, status: Sound.status.PAUSE };
+      return { ...state, status: Sound.status.PAUSED };
     default:
       return state;
   }
