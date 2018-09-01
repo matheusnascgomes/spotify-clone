@@ -1,4 +1,5 @@
 import Sound from 'react-sound';
+import { types } from 'util';
 
 export const Types = {
   LOAD: 'player/LOAD',
@@ -9,6 +10,7 @@ export const Types = {
   PLAYING: 'player/PLAYIG',
   HANDLE_POSITION: 'player/HANDLE',
   SET_POSITION: 'player/SET_POSITION',
+  SET_VOLUME: 'player/SET_VOLUME',
 };
 
 const INITIAL_STATE = {
@@ -18,6 +20,7 @@ const INITIAL_STATE = {
   position: null,
   positionShown: null,
   duration: null,
+  volume: 60,
 };
 
 export default function player(state = INITIAL_STATE, action) {
@@ -39,7 +42,10 @@ export default function player(state = INITIAL_STATE, action) {
 
       if (prev) {
         return {
-          ...state, currentSong: prev, status: Sound.status.PLAYING, position: 0,
+          ...state,
+          currentSong: prev,
+          status: Sound.status.PLAYING,
+          position: 0,
         };
       }
 
@@ -51,7 +57,10 @@ export default function player(state = INITIAL_STATE, action) {
 
       if (next) {
         return {
-          ...state, currentSong: next, status: Sound.status.PLAYING, position: 0,
+          ...state,
+          currentSong: next,
+          status: Sound.status.PLAYING,
+          position: 0,
         };
       }
 
@@ -65,6 +74,9 @@ export default function player(state = INITIAL_STATE, action) {
 
     case Types.SET_POSITION:
       return { ...state, position: state.duration * action.payload.percent, positionShown: null };
+
+    case Types.SET_VOLUME:
+      return { ...state, ...action.payload };
     default:
       return state;
   }
@@ -94,5 +106,9 @@ export const Creators = {
   setPosition: percent => ({
     type: Types.SET_POSITION,
     payload: { percent },
+  }),
+  setVolume: volume => ({
+    type: Types.SET_VOLUME,
+    payload: { volume },
   }),
 };
